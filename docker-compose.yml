@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  mktfy.api:
+    image: ${DOCKER_REGISTRY-}mktfy
+    build:
+      context: .
+      dockerfile: MKTFY.Api/Dockerfile
+
+  mktfy.auth:
+    image: ${DOCKER_REGISTRY-}mktfy
+    build:
+      context: .
+      dockerfile: MKTFY.Auth/Dockerfile
+
