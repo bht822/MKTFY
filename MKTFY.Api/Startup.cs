@@ -30,10 +30,10 @@ namespace MKTFY.Api
         public void ConfigureServices(IServiceCollection services)
         {
                 services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql("Host=localhost;Port=36000;Database=devdb;User Id=devdbuser;Password=devdbpassword",
+                options.UseNpgsql("Host=localhost;Port=36000;Database=MKTFY.dev.dB;User Id=devuser;Password=devpassword;",
                 b =>
                 {
-                    b.MigrationsAssembly("MKTFY.Api");
+                    b.MigrationsAssembly("MKTFY.App");
                 })
             );
 
