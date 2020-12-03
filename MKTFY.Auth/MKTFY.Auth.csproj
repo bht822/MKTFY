@@ -6,5 +6,9 @@
     <UserSecretsId>fc0c23d7-3fef-42df-83b4-166b457142b8</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="IdentityServer4" Version="4.1.1" />
+  </ItemGroup>
+
 
 </Project>
