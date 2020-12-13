@@ -1,25 +1,17 @@
 using System;
+using Microsoft.AspNetCore.Identity;
 using MKTFY.App;
+using System.ComponentModel.DataAnnotations;
 
 namespace MKTFY.Models.Entities
 {
-    public class AppUser
-    {
-        public int Id { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime UpdatedOn { get; set; }
-        public String first_name { get; set; }
+    public class AppUser: IdentityUser
+    {       
+        // [Required]
+        // public string FirstName { get; set; }
 
-        public String last_name { get; set; }
-        public String email { get; set; }
-        public int Phone_Number { get; set; }
-        public String City { get; set; }
-        public Boolean tos { get; set; }
-        public Boolean verified { get; set; }
+        // [Required]
+        // public string LastName { get; set; }
 
-        public int MyProperty { get; set; }
-
-        public UserAddress PrimaryAddress { get; set; }
-        
     }
 }

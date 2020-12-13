@@ -8,7 +8,7 @@ namespace MKTFY.Api.Controllers
 {
 
     [ApiController]
-    [Route("api/[controller]")]
+   // [Route("api/[controller]")]
     public class AppUserController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -16,11 +16,11 @@ namespace MKTFY.Api.Controllers
             _context = context;
 
         }
-        [HttpGet]
+        [HttpGet("api/users")]
         public ActionResult<IEnumerable<AppUser>> GetUsers()
         {
-            return _context.AppUsers.ToList();
-
+            return  _context.Users.ToList();
+            
             
         }
 

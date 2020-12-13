@@ -5,15 +5,12 @@ using MKTFY.Models.Entities;
 
 namespace MKTFY.App
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
-        public ApplicationDbContext(DbContextOptions options): base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
         {
             
         }
-        
-        public DbSet<AppUser> AppUsers { get; set; }
-        public DbSet <UserAddress> CustomerAddresses { get; set; }
-        
+
     }
 }
