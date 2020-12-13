@@ -7,25 +7,23 @@ using MKTFY.Models.Entities;
 namespace MKTFY.Api.Controllers
 {
 
-    public class UserController : ControllerBase
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AppUserController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        public UserController(ApplicationDbContext context)
-        {
+        public AppUserController(ApplicationDbContext context){
             _context = context;
-        }
 
+        }
         [HttpGet]
         public ActionResult<IEnumerable<AppUser>> GetUsers()
         {
-           return _context.AppUsers.ToList();
+            return _context.AppUsers.ToList();
 
+            
         }
-        [HttpGet("{id}")]
-        public ActionResult<AppUser> GetUser(int id)
-        {
-            return _context.AppUsers.Find(id);
 
-        }
+        
     }
 }

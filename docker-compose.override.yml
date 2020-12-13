@@ -5,7 +5,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ConnectionStrings__DefaultConnection=Server=MKTFY.db;Database=devdb;User Id=devuser;password=devpassword
+      - ConnectionStrings__DefaultConnection=Server=MKTFY.db;Database=MKTFYdevdB;User Id=devuser;password=devpassword
     ports:
       - "35000:80"
       - "35001:443"
@@ -18,7 +18,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ConnectionStrings__DefaultConnection=Server=MKTFY.db;Database=devdb;User Id=devuser;password=devpassword
+      - ConnectionStrings__DefaultConnection=Server=MKTFY.db;Database=MKTFYdevdB;User Id=devuser;password=devpassword
     ports:
       - "34000:80"
       - "34001:443"
