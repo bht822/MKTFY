@@ -2,29 +2,21 @@ version: '3.4'
 
 services:
   mktfy.api:
+    container_name: "MFTFY.api" 
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
       - ConnectionStrings__DefaultConnection=Server=MKTFY.db;Database=MKTFYdevdB;User Id=devuser;password=devpassword
     ports:
       - "35000:80"
       - "35001:443"
-    volumes:
-      - ~/.aspnet/https:/root/.aspnet/https:ro
-      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
     depends_on: 
       - "MKTFY.db"
   mktfy.auth:
+    container_name: "MFTFY.auth"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
       - ConnectionStrings__DefaultConnection=Server=MKTFY.db;Database=MKTFYdevdB;User Id=devuser;password=devpassword
     ports:
       - "34000:80"
       - "34001:443"
-    volumes:
-      - ~/.aspnet/https:/root/.aspnet/https:ro
-      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
   MKTFY.db:
     restart: on-failure
     image: "mdillon/postgis:latest"
