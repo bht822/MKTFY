@@ -63,7 +63,7 @@ namespace MKTFY.App.Migrations
                     b.ToTable("CustomerAddresses");
                 });
 
-            modelBuilder.Entity("MKTFY.Models.Entities.User", b =>
+            modelBuilder.Entity("MKTFY.Models.Entities.AppUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -304,7 +304,7 @@ namespace MKTFY.App.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MKTFY.Models.Entities.User", b =>
+            modelBuilder.Entity("MKTFY.Models.Entities.AppUser", b =>
                 {
                     b.HasOne("MKTFY.App.UserAddress", "PrimaryAddress")
                         .WithMany()

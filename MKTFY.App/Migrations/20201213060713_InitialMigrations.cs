@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MKTFY.App.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -174,7 +174,7 @@ namespace MKTFY.App.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AppUser",
+                name: "AppUsers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -193,9 +193,9 @@ namespace MKTFY.App.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppUser", x => x.Id);
+                    table.PrimaryKey("PK_AppUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AppUser_CustomerAddresses_PrimaryAddressId",
+                        name: "FK_AppUsers_CustomerAddresses_PrimaryAddressId",
                         column: x => x.PrimaryAddressId,
                         principalTable: "CustomerAddresses",
                         principalColumn: "Id",
@@ -203,8 +203,8 @@ namespace MKTFY.App.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppUser_PrimaryAddressId",
-                table: "AppUser",
+                name: "IX_AppUsers_PrimaryAddressId",
+                table: "AppUsers",
                 column: "PrimaryAddressId");
 
             migrationBuilder.CreateIndex(
@@ -248,7 +248,7 @@ namespace MKTFY.App.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AppUser");
+                name: "AppUsers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");

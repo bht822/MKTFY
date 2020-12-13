@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MKTFY.App.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201213051652_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20201213060713_InitialMigrations")]
+    partial class InitialMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,7 +65,7 @@ namespace MKTFY.App.Migrations
                     b.ToTable("CustomerAddresses");
                 });
 
-            modelBuilder.Entity("MKTFY.Models.Entities.User", b =>
+            modelBuilder.Entity("MKTFY.Models.Entities.AppUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,7 +109,7 @@ namespace MKTFY.App.Migrations
 
                     b.HasIndex("PrimaryAddressId");
 
-                    b.ToTable("AppUser");
+                    b.ToTable("AppUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -306,7 +306,7 @@ namespace MKTFY.App.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MKTFY.Models.Entities.User", b =>
+            modelBuilder.Entity("MKTFY.Models.Entities.AppUser", b =>
                 {
                     b.HasOne("MKTFY.App.UserAddress", "PrimaryAddress")
                         .WithMany()

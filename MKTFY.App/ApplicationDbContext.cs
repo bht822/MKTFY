@@ -12,7 +12,7 @@ namespace MKTFY.App
             
         }
         
-        public DbSet<User> AppUsers { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
         public DbSet <UserAddress> CustomerAddresses { get; set; }
         
     }

@@ -16,13 +16,13 @@ namespace MKTFY.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<User>> GetUsers()
+        public ActionResult<IEnumerable<AppUser>> GetUsers()
         {
            return _context.AppUsers.ToList();
 
         }
         [HttpGet("{id}")]
-        public ActionResult<User> GetUser(int id)
+        public ActionResult<AppUser> GetUser(int id)
         {
             return _context.AppUsers.Find(id);
 

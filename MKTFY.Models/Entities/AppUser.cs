@@ -3,7 +3,7 @@ using MKTFY.App;
 
 namespace MKTFY.Models.Entities
 {
-    public class User
+    public class AppUser
     {
         public int Id { get; set; }
         public DateTime CreatedOn { get; set; }
