@@ -174,7 +174,7 @@ namespace MKTFY.App.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customers",
+                name: "AppUser",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -193,14 +193,19 @@ namespace MKTFY.App.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.PrimaryKey("PK_AppUser", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Customers_CustomerAddresses_PrimaryAddressId",
+                        name: "FK_AppUser_CustomerAddresses_PrimaryAddressId",
                         column: x => x.PrimaryAddressId,
                         principalTable: "CustomerAddresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppUser_PrimaryAddressId",
+                table: "AppUser",
+                column: "PrimaryAddressId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -238,15 +243,13 @@ namespace MKTFY.App.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Customers_PrimaryAddressId",
-                table: "Customers",
-                column: "PrimaryAddressId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AppUser");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -263,16 +266,13 @@ namespace MKTFY.App.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "CustomerAddresses");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "CustomerAddresses");
         }
     }
 }

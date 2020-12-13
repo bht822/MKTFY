@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MKTFY.App
 {
-    public class CustomerAddress
+    public class UserAddress
     {
         [Required]
         public int Id { get; set; }

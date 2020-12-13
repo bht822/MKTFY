@@ -3,7 +3,7 @@ using MKTFY.App;
 
 namespace MKTFY.Models.Entities
 {
-    public class Customer
+    public class User
     {
         public int Id { get; set; }
         public DateTime CreatedOn { get; set; }
@@ -19,7 +19,7 @@ namespace MKTFY.Models.Entities
 
         public int MyProperty { get; set; }
 
-        public CustomerAddress PrimaryAddress { get; set; }
+        public UserAddress PrimaryAddress { get; set; }
         
     }
 }

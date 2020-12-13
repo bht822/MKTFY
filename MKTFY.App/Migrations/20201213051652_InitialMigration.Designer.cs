@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MKTFY.App.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201203054307_InitialMigration")]
+    [Migration("20201213051652_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace MKTFY.App.Migrations
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("MKTFY.App.CustomerAddress", b =>
+            modelBuilder.Entity("MKTFY.App.UserAddress", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,7 +65,7 @@ namespace MKTFY.App.Migrations
                     b.ToTable("CustomerAddresses");
                 });
 
-            modelBuilder.Entity("MKTFY.Models.Entities.Customer", b =>
+            modelBuilder.Entity("MKTFY.Models.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,7 +109,7 @@ namespace MKTFY.App.Migrations
 
                     b.HasIndex("PrimaryAddressId");
 
-                    b.ToTable("Customers");
+                    b.ToTable("AppUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -306,9 +306,9 @@ namespace MKTFY.App.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MKTFY.Models.Entities.Customer", b =>
+            modelBuilder.Entity("MKTFY.Models.Entities.User", b =>
                 {
-                    b.HasOne("MKTFY.App.CustomerAddress", "PrimaryAddress")
+                    b.HasOne("MKTFY.App.UserAddress", "PrimaryAddress")
                         .WithMany()
                         .HasForeignKey("PrimaryAddressId");
                 });
