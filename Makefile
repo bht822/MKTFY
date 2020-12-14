@@ -18,5 +18,5 @@ build:
 docker: 
 	docker-compose $(f) 
 rebuild:
-	docker-compose build && dockre-compose up
+	docker-compose build && docker-compose up
 
