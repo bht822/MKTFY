@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MKTFY.Models.Entities
 {
+    // AppUser to inherit from Identity User and custom data such as avatar etc to be extended here
     public class AppUser: IdentityUser
     {       
         // [Required]
