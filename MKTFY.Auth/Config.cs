@@ -9,6 +9,18 @@ namespace MKTFY.Auth
     // static class , dont need an object to use it . Dont need instance of config 
     public static class Config
     {
+        
+        public static IEnumerable<ApiResource> ApiResources =>
+        new List<ApiResource>
+        {
+            new ApiResource 
+            {
+                Name = "MKTFYapi",
+                DisplayName = "MKTFY API",
+                Scopes = {"MKTFYapi.scope"}
+            }
+        };
+
 
         // define the scopes
         public static IEnumerable<ApiScope> ApiScopes =>
@@ -35,23 +47,23 @@ namespace MKTFY.Auth
             
         };
 
-        public static List<TestUser> Users =>
-        new List<TestUser>
-        {
-            new TestUser 
-            {
-                SubjectId = "1",
-                Username = "alice",
-                Password = "password"
-            },
-             new TestUser 
-            {
-                SubjectId = "2",
-                Username = "bob",
-                Password = "password"
-            }
+        // public static List<TestUser> Users =>
+        // new List<TestUser>
+        // {
+        //     new TestUser 
+        //     {
+        //         SubjectId = "1",
+        //         Username = "alice",
+        //         Password = "password"
+        //     },
+        //      new TestUser 
+        //     {
+        //         SubjectId = "2",
+        //         Username = "bob",
+        //         Password = "password"
+        //     }
             
-        };
+        // };
 
         
         

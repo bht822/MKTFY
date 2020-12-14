@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MKTFY.App.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201213225612_Initial_attempt55")]
-    partial class Initial_attempt55
+    [Migration("20201214055637_InitialMigrations_attempt55")]
+    partial class InitialMigrations_attempt55
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,14 @@ namespace MKTFY.App.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");

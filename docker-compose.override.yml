@@ -5,6 +5,8 @@ services:
     container_name: "MFTFY.api" 
     environment:
       - ConnectionStrings__DefaultConnection=Server=MKTFY.db;Database=MKTFYdevdB;User Id=devuser;password=devpassword
+      - Identity__Authority=http://MFTFY.auth
+
     ports:
       - "35000:80"
       - "35001:443"
@@ -14,6 +16,7 @@ services:
     container_name: "MFTFY.auth"
     environment:
       - ConnectionStrings__DefaultConnection=Server=MKTFY.db;Database=MKTFYdevdB;User Id=devuser;password=devpassword
+      - Identity__Authority=http://MFTFY.auth
     ports:
       - "34000:80"
       - "34001:443"

@@ -16,6 +16,7 @@ using MKTFY.App;
 using MKTFY.Models.Entities;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace MKTFY.Api
 {
@@ -41,6 +42,15 @@ namespace MKTFY.Api
                     b.MigrationsAssembly("MKTFY.App");
                 })
             );
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddIdentityServerAuthentication(options =>{
+                    options.Authority = Configuration.GetSection("Identity")
+                    .GetValue<string>("Authority");
+                    options.ApiName = "MKTFYapi";
+                    options.RequireHttpsMetadata = false;
+
+                });
             // Configure Identity users, App user is the Identity User in MKTFY
             services.AddIdentity<AppUser, IdentityRole> (options => {
 
@@ -69,7 +79,7 @@ namespace MKTFY.Api
 
             app.UseRouting();
             
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

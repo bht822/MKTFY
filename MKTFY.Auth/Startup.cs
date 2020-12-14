@@ -1,8 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MKTFY.App;
+using MKTFY.Models.Entities;
 
 namespace MKTFY.Auth
 {
@@ -19,11 +23,32 @@ namespace MKTFY.Auth
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentityServer()
+            services.AddDbContext<ApplicationDbContext>(builder =>
+                builder.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"),
+                    b=>
+                    {
+                        b.MigrationsAssembly("MKTFY.app");
+                    }));
+
+            services.AddIdentity<AppUser, IdentityRole> ()
+                 .AddEntityFrameworkStores<ApplicationDbContext>(); // Tell Identity which EF DbContext to use
+            
+
+            var identity = services.AddIdentityServer()
+                .AddOperationalStore(options =>
+               {
+                   options.ConfigureDbContext = builder => builder.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"),
+                       npgSqlOptions =>
+                       {
+                           npgSqlOptions.MigrationsAssembly("MKTFY.App");
+                       });
+               })
                 .AddDeveloperSigningCredential()
+                .AddInMemoryApiResources(Config.ApiResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients)
-                .AddTestUsers(Config.Users);
+                .AddAspNetIdentity<AppUser>();
+                //.AddTestUsers(Config.Users);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
