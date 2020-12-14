@@ -32,9 +32,10 @@ namespace MKTFY.Auth
 
             services.AddIdentity<AppUser, IdentityRole> ()
                  .AddEntityFrameworkStores<ApplicationDbContext>(); // Tell Identity which EF DbContext to use
-            
-
-            var identity = services.AddIdentityServer()
+            var builder = services.AddIdentityServer(option =>
+            {
+                option.IssuerUri = Configuration.GetSection("Identity").GetValue<string>("Authority");
+            })
                 .AddOperationalStore(options =>
                {
                    options.ConfigureDbContext = builder => builder.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"),

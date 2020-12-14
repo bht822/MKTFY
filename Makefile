@@ -4,7 +4,7 @@ PROJECT_NAME ?= MKTFY
 ORG_NAME ?= MKTFY
 REPO_NAME ?= MKTFY
 
-.PHONY: migrations db build docker 
+.PHONY: migrations db build docker rebuild
 
 migrations:
 		cd ./MKTFY.App && dotnet ef --startup-project ../MKTFY.Api/ migrations add $(mname) && cd ..
@@ -17,4 +17,6 @@ build:
 
 docker: 
 	docker-compose $(f) 
+rebuild:
+	docker-compose build && dockre-compose up
 

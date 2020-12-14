@@ -61,8 +61,8 @@ namespace MKTFY.Api
                 options.Password.RequireUppercase = false;
 
             })
-            .AddEntityFrameworkStores<ApplicationDbContext>(); // Tell Identity which EF DbContext to use
-
+            .AddEntityFrameworkStores<ApplicationDbContext>() // Tell Identity which EF DbContext to use
+            .AddDefaultTokenProviders();
             
             services.AddControllers();
         }

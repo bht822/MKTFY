@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MKTFY.App;
 using MKTFY.Models.Entities;
@@ -17,6 +18,7 @@ namespace MKTFY.Api.Controllers
 
         }
         [HttpGet("api/users")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public ActionResult<IEnumerable<AppUser>> GetUsers()
         {
             return  _context.Users.ToList();
