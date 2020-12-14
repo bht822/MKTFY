@@ -5,29 +5,33 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ConnectionStrings__DefaultConnection=Server=MKTFY.db;Database=devdb;User Id=devuser;password=devpassword
     ports:
       - "35000:80"
       - "35001:443"
     volumes:
       - ~/.aspnet/https:/root/.aspnet/https:ro
       - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+    depends_on: 
+      - "MKTFY.db"
   mktfy.auth:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ConnectionStrings__DefaultConnection=Server=MKTFY.db;Database=devdb;User Id=devuser;password=devpassword
     ports:
-      - "80"
-      - "443"
+      - "34000:80"
+      - "34001:443"
     volumes:
       - ~/.aspnet/https:/root/.aspnet/https:ro
       - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
-  mktfy.db:
+  MKTFY.db:
     restart: on-failure
     image: "mdillon/postgis:latest"
     container_name: "MKTFY.db"
     environment:
         - POSTGRES_USER=devuser
-        - POSTGRES_DB=MKTFYdB
+        - POSTGRES_DB=MKTFYdevdB
         - POSTGRESS_PASSWORD=devpassword
     volumes:
         - MKTFY-db:/var/lib/postgerssql/data
