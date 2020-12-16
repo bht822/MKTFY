@@ -17,6 +17,8 @@ using MKTFY.Models.Entities;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MKTFY.App.Interface;
+using MKTFY.App.Repositories;
 
 namespace MKTFY.Api
 {
@@ -42,15 +44,6 @@ namespace MKTFY.Api
                     b.MigrationsAssembly("MKTFY.App");
                 })
             );
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication(options =>{
-                    options.Authority = Configuration.GetSection("Identity")
-                    .GetValue<string>("Authority");
-                    options.ApiName = "MKTFYapi";
-                    options.RequireHttpsMetadata = false;
-
-                });
             // Configure Identity users, App user is the Identity User in MKTFY
             services.AddIdentity<AppUser, IdentityRole> (options => {
 
@@ -61,10 +54,23 @@ namespace MKTFY.Api
                 options.Password.RequireUppercase = false;
 
             })
-            .AddEntityFrameworkStores<ApplicationDbContext>() // Tell Identity which EF DbContext to use
-            .AddDefaultTokenProviders();
+                 .AddEntityFrameworkStores<ApplicationDbContext>() // Tell Identity which EF DbContext to use
+                 .AddDefaultTokenProviders();
             
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddIdentityServerAuthentication(options =>{
+                    options.Authority = Configuration.GetSection("Identity")
+                    .GetValue<string>("Authority");
+                    options.ApiName = "MKTFYapi";
+                    options.RequireHttpsMetadata = false;
+
+                });
+
             services.AddControllers();
+
+            // Add repositories 
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

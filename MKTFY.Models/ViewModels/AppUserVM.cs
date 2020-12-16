@@ -7,13 +7,18 @@ namespace MKTFY.Models.ViewModels
     {
         public AppUserVM(AppUser src)
         {
-            Id = src.Id ;
+            Id = src.Id;
+            Email = src.Email;
+            FirstName = src.FirstName;
+            LastName = src.LastName;
         
 
             
         }
         public String Id { get; set; }      
         public string FirstName { get; set; }
+
+        public string Email { get; set; }
 
         public string LastName { get; set; }
         

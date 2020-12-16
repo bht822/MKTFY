@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MKTFY.App.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201214055637_InitialMigrations_attempt55")]
-    partial class InitialMigrations_attempt55
+    [Migration("20201216090752_Initial_attempt_99")]
+    partial class Initial_attempt_99
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

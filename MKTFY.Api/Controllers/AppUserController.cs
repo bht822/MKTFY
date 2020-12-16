@@ -8,8 +8,10 @@ using MKTFY.Models.Entities;
 namespace MKTFY.Api.Controllers
 {
 
-    [ApiController]
+    //[ApiController]
    // [Route("api/[controller]")]
+       [Authorize(AuthenticationSchemes = "Bearer")]
+
     public class AppUserController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
