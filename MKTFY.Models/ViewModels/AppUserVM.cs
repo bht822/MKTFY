@@ -1,6 +1,7 @@
 using System;
 using MKTFY.Models.Entities;
 
+
 namespace MKTFY.Models.ViewModels
 {
     public class AppUserVM

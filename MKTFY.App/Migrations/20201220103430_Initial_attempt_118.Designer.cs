@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MKTFY.App.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201220061735_Initial_attempt_102")]
-    partial class Initial_attempt_102
+    [Migration("20201220103430_Initial_attempt_118")]
+    partial class Initial_attempt_118
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -81,6 +81,12 @@ namespace MKTFY.App.Migrations
                         .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
+                    b.Property<DateTime>("lastLogin")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("profilePhotoId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -90,7 +96,148 @@ namespace MKTFY.App.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex");
 
+                    b.HasIndex("profilePhotoId");
+
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("MKTFY.Models.Entities.ListingPhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int?>("ListingsId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PublicId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("isMain")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ListingsId");
+
+                    b.ToTable("ListingPhotos");
+                });
+
+            modelBuilder.Entity("MKTFY.Models.Entities.ListingStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ListingStatus");
+                });
+
+            modelBuilder.Entity("MKTFY.Models.Entities.Listings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("city")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasColumnType("character varying(300)")
+                        .HasMaxLength(300);
+
+                    b.Property<int>("listingStatusId")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("price")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("title")
+                        .IsRequired()
+                        .HasColumnType("character varying(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("updated")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("listingStatusId");
+
+                    b.ToTable("Listings");
+                });
+
+            modelBuilder.Entity("MKTFY.Models.Entities.ProfilePhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("PublicId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("isMain")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProfilePhotos");
+                });
+
+            modelBuilder.Entity("MKTFY.Models.Entities.Transaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int?>("Asscociated_listingId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("buyerId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("complete")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("createdOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("sellerId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Asscociated_listingId");
+
+                    b.HasIndex("buyerId");
+
+                    b.HasIndex("sellerId");
+
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -221,6 +368,48 @@ namespace MKTFY.App.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("MKTFY.Models.Entities.AppUser", b =>
+                {
+                    b.HasOne("MKTFY.Models.Entities.ProfilePhoto", "profilePhoto")
+                        .WithMany()
+                        .HasForeignKey("profilePhotoId");
+                });
+
+            modelBuilder.Entity("MKTFY.Models.Entities.ListingPhoto", b =>
+                {
+                    b.HasOne("MKTFY.Models.Entities.Listings", null)
+                        .WithMany("ListingPhoto")
+                        .HasForeignKey("ListingsId");
+                });
+
+            modelBuilder.Entity("MKTFY.Models.Entities.Listings", b =>
+                {
+                    b.HasOne("MKTFY.Models.Entities.AppUser", null)
+                        .WithMany("myListings")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("MKTFY.Models.Entities.ListingStatus", "listingStatus")
+                        .WithMany()
+                        .HasForeignKey("listingStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MKTFY.Models.Entities.Transaction", b =>
+                {
+                    b.HasOne("MKTFY.Models.Entities.Listings", "Asscociated_listing")
+                        .WithMany()
+                        .HasForeignKey("Asscociated_listingId");
+
+                    b.HasOne("MKTFY.Models.Entities.AppUser", "buyer")
+                        .WithMany()
+                        .HasForeignKey("buyerId");
+
+                    b.HasOne("MKTFY.Models.Entities.AppUser", "seller")
+                        .WithMany()
+                        .HasForeignKey("sellerId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
