@@ -58,6 +58,9 @@ namespace MKTFY.Api
                  .AddDefaultTokenProviders();
             
 
+
+            services.AddControllers();
+            
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>{
                     options.Authority = Configuration.GetSection("Identity").GetValue<string>("Authority");
@@ -66,7 +69,6 @@ namespace MKTFY.Api
 
                 });
 
-            services.AddControllers();
 
             // Add repositories 
             services.AddScoped<IUserRepository, UserRepository>();

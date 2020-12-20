@@ -9,6 +9,8 @@ namespace MKTFY.Models.ViewModels
         {
             AccessToken = tokenresponse.AccessToken;
             Expires = tokenresponse.ExpiresIn;
+            TokenType = tokenresponse.TokenType;
+            TokenType2 = tokenresponse.IssuedTokenType;
             User = user;
             
         }
@@ -16,7 +18,12 @@ namespace MKTFY.Models.ViewModels
         public string AccessToken { get; set; }
 
         public long  Expires { get; set; }
+     public string TokenType { get; set; }
+
+        public string  TokenType2 { get; set; }
 
         public AppUserVM User { get; set; }
+
+
     }
 }

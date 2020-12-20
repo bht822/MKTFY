@@ -64,17 +64,17 @@ namespace MKTFY.Api.Controllers
                 // Make the call to our identity server
                 var tokenResponse = await httpClient.RequestPasswordTokenAsync(new PasswordTokenRequest
                 {
-                    Address = "http://localhost:34000/connect/token",
+                    Address = authority + "/connect/token",
                     UserName = login.Email,
                     Password = login.Password,
                     ClientId = login.ClientID,
                     ClientSecret = "3nn4Uq8LZ4ilUWfcHzWEjVvLvSouvwPy",
-                    Scope = "MKTFYapi.scope"
+                    Scope = "MKTFYapi.scope",
                 }).ConfigureAwait(false);
 
                 if (tokenResponse.IsError)
                 {
-                    return BadRequest(tokenResponse.Raw);
+                    return BadRequest("tokenresponse is error");
                     
                 }
                     
