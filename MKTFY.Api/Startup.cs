@@ -60,8 +60,7 @@ namespace MKTFY.Api
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>{
-                    options.Authority = Configuration.GetSection("Identity")
-                    .GetValue<string>("Authority");
+                    options.Authority = Configuration.GetSection("Identity").GetValue<string>("Authority");
                     options.ApiName = "MKTFYapi";
                     options.RequireHttpsMetadata = false;
 

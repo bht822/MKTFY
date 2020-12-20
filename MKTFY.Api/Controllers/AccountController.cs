@@ -15,26 +15,27 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MKTFY.Api.Controllers
 {   
-    [Route("account/[controller]")]
     [ApiController] 
-   // [Authorize(AuthenticationSchemes = "Bearer")]
+   // [Route("account/[controller]")]
+  //  [Authorize]
     public class AccountController: ControllerBase
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
 
-        public AccountController(SignInManager<AppUser> signInManager, IUserRepository userRepository, IConfiguration configuration)
+        public AccountController(SignInManager<AppUser> signInManager,IConfiguration configuration,IUserRepository userRepository)
         {
             _signInManager = signInManager;
             _configuration = configuration;
-            _userRepository =userRepository;
+            _userRepository = userRepository;
 
         }
 
-        [HttpPost("Login")]
+        [HttpPost("account/login")]
         public async Task<ActionResult<LoginReponseVM>> Login([FromBody] LoginVM login)
         {
+        
             if(!ModelState.IsValid)
                 return BadRequest("Bad Data");
             
@@ -59,6 +60,7 @@ namespace MKTFY.Api.Controllers
             {
                 var authority = _configuration.GetSection("Identity").GetValue<string>("Authority");
 
+
                 // Make the call to our identity server
                 var tokenResponse = await httpClient.RequestPasswordTokenAsync(new PasswordTokenRequest
                 {
@@ -72,9 +74,11 @@ namespace MKTFY.Api.Controllers
 
                 if (tokenResponse.IsError)
                 {
-                    return BadRequest("Unable to grant access to user account");
+                    return BadRequest(tokenResponse.Raw);
                     
                 }
+                    
+
                 return Ok(new LoginReponseVM(tokenResponse, user));
             }
 

@@ -8,9 +8,9 @@ using MKTFY.Models.Entities;
 namespace MKTFY.Api.Controllers
 {
 
-    //[ApiController]
-   // [Route("api/[controller]")]
-       [Authorize(AuthenticationSchemes = "Bearer")]
+    [ApiController]
+  // [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
 
     public class AppUserController : ControllerBase
     {
@@ -19,8 +19,9 @@ namespace MKTFY.Api.Controllers
             _context = context;
 
         }
+        
         [HttpGet("api/users")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+       // [Authorize(AuthenticationSchemes = "Bearer")]
         public ActionResult<IEnumerable<AppUser>> GetUsers()
         {
             return  _context.Users.ToList();
