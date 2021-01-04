@@ -3,15 +3,17 @@ using System;
 using MKTFY.App;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MKTFY.App.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201220091218_Initial_attempt_117")]
+    partial class Initial_attempt_117
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,12 +74,18 @@ namespace MKTFY.App.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
+                    b.Property<bool>("ToS")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
                         .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
+
+                    b.Property<Guid>("cityId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("lastLogin")
                         .HasColumnType("timestamp without time zone");
@@ -94,9 +102,43 @@ namespace MKTFY.App.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex");
 
+                    b.HasIndex("cityId");
+
                     b.HasIndex("profilePhotoId");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("MKTFY.Models.Entities.Cities", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("ProvinceId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProvinceId");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("MKTFY.Models.Entities.Countries", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("MKTFY.Models.Entities.ListingPhoto", b =>
@@ -203,6 +245,32 @@ namespace MKTFY.App.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProfilePhotos");
+                });
+
+            modelBuilder.Entity("MKTFY.Models.Entities.Provinces", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Abbreviation")
+                        .IsRequired()
+                        .HasColumnType("character varying(2)")
+                        .HasMaxLength(2);
+
+                    b.Property<string>("ProvinceName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("countryId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("countryId");
+
+                    b.ToTable("Provinces");
                 });
 
             modelBuilder.Entity("MKTFY.Models.Entities.Transaction", b =>
@@ -370,9 +438,24 @@ namespace MKTFY.App.Migrations
 
             modelBuilder.Entity("MKTFY.Models.Entities.AppUser", b =>
                 {
+                    b.HasOne("MKTFY.Models.Entities.Cities", "city")
+                        .WithMany()
+                        .HasForeignKey("cityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MKTFY.Models.Entities.ProfilePhoto", "profilePhoto")
                         .WithMany()
                         .HasForeignKey("profilePhotoId");
+                });
+
+            modelBuilder.Entity("MKTFY.Models.Entities.Cities", b =>
+                {
+                    b.HasOne("MKTFY.Models.Entities.Provinces", "Province")
+                        .WithMany()
+                        .HasForeignKey("ProvinceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MKTFY.Models.Entities.ListingPhoto", b =>
@@ -393,6 +476,13 @@ namespace MKTFY.App.Migrations
                         .HasForeignKey("listingStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MKTFY.Models.Entities.Provinces", b =>
+                {
+                    b.HasOne("MKTFY.Models.Entities.Countries", "country")
+                        .WithMany()
+                        .HasForeignKey("countryId");
                 });
 
             modelBuilder.Entity("MKTFY.Models.Entities.Transaction", b =>
